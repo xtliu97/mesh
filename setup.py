@@ -25,7 +25,7 @@ import os
 namespace_package = 'psbody'
 
 # the CGAL archive
-CGAL_archive = convert_path('mesh/thirdparty/CGAL-4.7.tar.gz')
+CGAL_archive = convert_path('mesh/thirdparty/CGAL-4.8.tar.xz')
 
 
 def _get_version():
@@ -62,7 +62,7 @@ class build_deflate_cgal(Command):
         CGAL_dir_deflate = os.path.abspath(self.build_temp)
 
         log.info('[CGAL] deflating cgal from "%s" to "%s"', CGAL_archive, CGAL_dir_deflate)
-        if not os.path.exists(os.path.join(CGAL_dir_deflate, 'CGAL-4.7')):
+        if not os.path.exists(os.path.join(CGAL_dir_deflate, 'CGAL-4.8')):
             import tarfile
             os.makedirs(CGAL_dir_deflate)
 
@@ -70,7 +70,7 @@ class build_deflate_cgal(Command):
             cgal_tar.extractall(CGAL_dir_deflate)
 
         # create a dummy configuration file
-        config_file = os.path.join(CGAL_dir_deflate, 'CGAL-4.7', 'include', 'CGAL', 'compiler_config.h')
+        config_file = os.path.join(CGAL_dir_deflate, 'CGAL-4.8', 'include', 'CGAL', 'compiler_config.h')
         if not os.path.exists(config_file):
             open(config_file, 'w')
 
@@ -109,7 +109,7 @@ class build_ext(_build_ext):
         # should be possible to have boost on the system
         # assert(self.boost_location is not None), 'the boost location should be provided with the option "--boost-location"'
 
-        ext.include_dirs += [os.path.join(os.path.abspath(self.build_temp), 'CGAL-4.7', 'include')]
+        ext.include_dirs += [os.path.join(os.path.abspath(self.build_temp), 'CGAL-4.8', 'include')]
         if self.boost_location is not None:
             ext.include_dirs += [self.boost_location]
 
@@ -145,7 +145,7 @@ class install(_install):
         return _install.initialize_options(self)
 
     def finalize_options(self):
-
+        # self.boost_location = "/opt/homebrew/Cellar/boost/1.83.0/include" # TODO: remove this, bug happens here
         # if self.boost_location is not None:
         #     self.boost_location = os.path.expanduser(self.boost_location)
 
