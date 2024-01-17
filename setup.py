@@ -145,10 +145,7 @@ class install(_install):
         return _install.initialize_options(self)
 
     def finalize_options(self):
-        # self.boost_location = "/opt/homebrew/Cellar/boost/1.83.0/include" # TODO: remove this, bug happens here
-        # if self.boost_location is not None:
-        #     self.boost_location = os.path.expanduser(self.boost_location)
-
+        self.boost_location = os.environ.get("BOOST_INCLUDE_DIRS")
         return _install.finalize_options(self)
 
 

@@ -35,6 +35,12 @@ or on macOS
 $ brew install boost
 ```
 
+Then add BOOST_INCLUDE_DIRS to your environment variables:
+
+```
+export BOOST_INCLUDE_DIRS=/path/to/boost/include
+```
+
 Installation
 ------------
 
