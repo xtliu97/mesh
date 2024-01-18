@@ -75,6 +75,8 @@ struct VisibilityTask{
     void operator() (const int icam) const{
         Point cam(cams_arr[icam][0], cams_arr[icam][1], cams_arr[icam][2]);
         K::Vector_3 xoff,yoff,zoff;
+        std::cout << "cam\n";
+        std::cout << cams_arr[icam][0] << " " << cams_arr[icam][1] << " " << cams_arr[icam][2] << std::endl;
         double planeoff;
         if (use_sensors){
             xoff = K::Vector_3(sensors_arr[icam][0],sensors_arr[icam][1],sensors_arr[icam][2]);
@@ -82,6 +84,12 @@ struct VisibilityTask{
             zoff = K::Vector_3(-sensors_arr[icam][6],-sensors_arr[icam][7],-sensors_arr[icam][8]);
             // compute D; dot product between plane normal zoff and a point (cam+zoff) on the plane
             planeoff = zoff*((cam+zoff)-CGAL::ORIGIN);
+
+            // using sensor
+            std::cout << "Using sensor" << std::endl;
+            std::cout << sensors_arr[icam][0] << " " << sensors_arr[icam][1] << " " << sensors_arr[icam][2] << std::endl;
+            std::cout << sensors_arr[icam][3] << " " << sensors_arr[icam][4] << " " << sensors_arr[icam][5] << std::endl;
+            std::cout << sensors_arr[icam][6] << " " << sensors_arr[icam][7] << " " << sensors_arr[icam][8] << std::endl;
         }
         for(unsigned ivert=0; ivert<verts_v.size(); ++ivert)
         {
@@ -105,12 +113,17 @@ struct VisibilityTask{
                     uint32_t reach_sensor = ((fabs(p_i*xoff) < xoff.squared_length()) &&
                             (fabs(p_i*yoff) < yoff.squared_length()));
                     visibility_mat[ivert + icam*verts_v.size()] = reach_sensor;
+                    std::cout << "116 " << reach_sensor << std::endl;
                 }
-                else
+                else{
                     visibility_mat[ivert + icam*verts_v.size()] = 0;
+                    std::cout << "120 " << 0 << std::endl;
+                }
             }
-            else
+            else{
                 visibility_mat[ivert + icam*verts_v.size()] = reach_lens;
+                std::cout << "124 " << reach_lens << std::endl;
+            }
         }
     }
 
