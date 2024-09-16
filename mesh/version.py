@@ -3,4 +3,4 @@
 
 # Copyright (c) 2016 Max Planck Society. All rights reserved.
 
-__version__ = '0.4'
+__version__ = '0.4.1'
